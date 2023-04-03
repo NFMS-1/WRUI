@@ -9,7 +9,7 @@ screenGUI.Parent = game:GetService("CoreGui")
 -- // Create a TextButton
 local textButton = Instance.new("TextButton")
 textButton.Name = "main"
-textButton.Text = "Part Color: White"
+textButton.Text = "Room Color: White"
 textButton.Size = UDim2.new(0, 334, 0, 50)
 textButton.Position = UDim2.new(0.5, -100, 0.5, -25)
 textButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
@@ -45,7 +45,7 @@ textButton.MouseButton1Up:Connect(function()
 
 	if isActive then
 		tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Thickness = 5}):Play()
-		textButton.Text = "Part Color: Gray"
+		textButton.Text = "Room Color: Gray"
 		for _, part in pairs(workspace:GetDescendants()) do
 			if part:IsA("BasePart") and part.Name == "Part" then
 				tweenService:Create(part, TweenInfo.new(.6, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = newColor}):Play()
@@ -53,7 +53,7 @@ textButton.MouseButton1Up:Connect(function()
 		end
 	else
 		tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Thickness = 5}):Play()
-		textButton.Text = "Part Color: White"
+		textButton.Text = "Room Color: White"
 		for _, part in pairs(workspace:GetDescendants()) do
 			if part:IsA("BasePart") and part.Name == "Part" then
 				tweenService:Create(part, TweenInfo.new(.6, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = previousColor}):Play()
