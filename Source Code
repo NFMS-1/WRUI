@@ -1,0 +1,74 @@
+-- // Services
+local tweenService = game:GetService("TweenService")
+
+-- // Create the ScreenGui
+local screenGUI = Instance.new("ScreenGui")
+screenGUI.Name = "partColorChanger"
+screenGUI.Parent = game:GetService("CoreGui")
+
+-- // Create a TextButton
+local textButton = Instance.new("TextButton")
+textButton.Name = "main"
+textButton.Text = "Part Color: White"
+textButton.Size = UDim2.new(0, 334, 0, 50)
+textButton.Position = UDim2.new(0.5, -100, 0.5, -25)
+textButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+textButton.BackgroundTransparency = 0.5
+textButton.Draggable = true
+textButton.Font = Enum.Font.GothamBold
+textButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+textButton.TextSize = 35
+textButton.Parent = screenGUI
+
+-- // Create a UICorner
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 15)
+uiCorner.Parent = textButton
+
+-- // Create a UIStroke
+local uiStroke = Instance.new("UIStroke")
+uiStroke.Color = Color3.fromRGB(70, 70, 70)
+uiStroke.Thickness = 5
+uiStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+uiStroke.Transparency = 0.7
+uiStroke.Parent = textButton
+
+-- // Variables
+local previousColor = Color3.fromRGB(242, 243, 243)
+local newColor = Color3.fromRGB(56, 56, 56)
+local isActive
+local isDragged = false
+
+-- // Click function
+textButton.MouseButton1Up:Connect(function()
+	isActive = not isActive
+
+	if isActive then
+		tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Thickness = 5}):Play()
+		textButton.Text = "Part Color: Gray"
+		for _, part in pairs(workspace:GetDescendants()) do
+			if part:IsA("BasePart") and part.Name == "Part" then
+				tweenService:Create(part, TweenInfo.new(.6, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = newColor}):Play()
+			end
+		end
+	else
+		tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Thickness = 5}):Play()
+		textButton.Text = "Part Color: White"
+		for _, part in pairs(workspace:GetDescendants()) do
+			if part:IsA("BasePart") and part.Name == "Part" then
+				tweenService:Create(part, TweenInfo.new(.6, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = previousColor}):Play()
+			end
+		end
+	end
+end)
+
+textButton.MouseButton1Down:Connect(function()
+	tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0, Thickness = 10}):Play()
+end)
+
+textButton.MouseEnter:Connect(function()
+	tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0, Color = Color3.fromRGB(255, 255, 255)}):Play()
+end)
+textButton.MouseLeave:Connect(function()
+	tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Color = Color3.fromRGB(70, 70, 70)}):Play()
+end)
