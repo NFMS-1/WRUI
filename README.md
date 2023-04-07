@@ -16,3 +16,14 @@ Assistance : Anonymous
 
 
 Current version: 2.0
+
+Version History:
+
+> 2.0 
+Proper UI implementation with more options & settings tabs
+
+> 1.1 
+Button upgrade
+
+> 1.0 
+Script created as 1 singular button
