@@ -1,74 +1,625 @@
--- // Services
 local tweenService = game:GetService("TweenService")
+local predefinedInfo = TweenInfo.new(.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0)
 
--- // Create the ScreenGui
-local screenGUI = Instance.new("ScreenGui")
-screenGUI.Name = "partColorChanger"
-screenGUI.Parent = game:GetService("CoreGui")
+local isEnabled1
+local isEnabled2
+local isEnabled3
+local isEnabled4
+local timeout = .75
+local timeout2 = .5
+local debounce = false
+local debounce2 = false
+local debounce3 = false
+local isSmoothEnabled = false
+local smoothTime = 0
 
--- // Create a TextButton
-local textButton = Instance.new("TextButton")
-textButton.Name = "main"
-textButton.Text = "Room Color: White"
-textButton.Size = UDim2.new(0, 334, 0, 50)
-textButton.Position = UDim2.new(0.5, -100, 0.5, -25)
-textButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-textButton.BackgroundTransparency = 0.5
-textButton.Draggable = true
-textButton.Font = Enum.Font.GothamBold
-textButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-textButton.TextSize = 35
-textButton.Parent = screenGUI
+local injectedUI = Instance.new("ScreenGui")
+local main = Instance.new("Frame")
+local roundy = Instance.new("UICorner")
+local dropdownButton = Instance.new("ImageButton")
+local roundy_2 = Instance.new("UICorner")
+local settingButton = Instance.new("ImageButton")
+local roundy_3 = Instance.new("UICorner")
+local colorButton = Instance.new("ImageButton")
+local roundy_4 = Instance.new("UICorner")
+local credits = Instance.new("Frame")
+local roundy_5 = Instance.new("UICorner")
+local doNotSteal = Instance.new("TextLabel")
+local notice = Instance.new("TextLabel")
+local mainSettings = Instance.new("Frame")
+local roundy_6 = Instance.new("UICorner")
+local title = Instance.new("TextLabel")
+local value = Instance.new("TextBox")
+local roundy_7 = Instance.new("UICorner")
+local smoothness = Instance.new("TextButton")
+local roundy_8 = Instance.new("UICorner")
+local colors = Instance.new("Frame")
+local roundy_9 = Instance.new("UICorner")
+local title_2 = Instance.new("TextLabel")
+local content = Instance.new("ScrollingFrame")
+local color = Instance.new("TextButton")
+local roundy_10 = Instance.new("UICorner")
+local adjust = Instance.new("UIGridLayout")
+local color_2 = Instance.new("TextButton")
+local roundy_11 = Instance.new("UICorner")
+local color_3 = Instance.new("TextButton")
+local roundy_12 = Instance.new("UICorner")
+local color_4 = Instance.new("TextButton")
+local roundy_13 = Instance.new("UICorner")
+local color_5 = Instance.new("TextButton")
+local roundy_14 = Instance.new("UICorner")
+local color_6 = Instance.new("TextButton")
+local roundy_15 = Instance.new("UICorner")
+local color_7 = Instance.new("TextButton")
+local roundy_16 = Instance.new("UICorner")
+local color_8 = Instance.new("TextButton")
+local roundy_17 = Instance.new("UICorner")
+local color_9 = Instance.new("TextButton")
+local roundy_18 = Instance.new("UICorner")
+local color_10 = Instance.new("TextButton")
+local roundy_19 = Instance.new("UICorner")
 
--- // Create a UICorner
-local uiCorner = Instance.new("UICorner")
-uiCorner.CornerRadius = UDim.new(0, 15)
-uiCorner.Parent = textButton
+injectedUI.Name = "injectedUI"
+injectedUI.Parent = game:GetService("CoreGui")
+main.Name = "main"
+main.Parent = injectedUI
+main.AnchorPoint = Vector2.new(0.5, 0.5)
+main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+main.BackgroundTransparency = 0.500
+main.BorderColor3 = Color3.fromRGB(27, 42, 53)
+main.BorderSizePixel = 0
+main.Position = UDim2.new(0.499833971, 0, 0.0793873221, 0)
+main.Size = UDim2.new(0, 70, 0, 70)
 
--- // Create a UIStroke
-local uiStroke = Instance.new("UIStroke")
-uiStroke.Color = Color3.fromRGB(70, 70, 70)
-uiStroke.Thickness = 5
-uiStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-uiStroke.Transparency = 0.7
-uiStroke.Parent = textButton
+roundy.CornerRadius = UDim.new(0, 45)
+roundy.Name = "roundy"
+roundy.Parent = main
 
--- // Variables
-local previousColor = Color3.fromRGB(242, 243, 243)
-local newColor = Color3.fromRGB(56, 56, 56)
-local isActive
-local isDragged = false
+dropdownButton.Name = "dropdownButton"
+dropdownButton.Parent = main
+dropdownButton.BackgroundTransparency = 1.000
+dropdownButton.Size = UDim2.new(0, 70, 0, 70)
+dropdownButton.Image = "http://www.roblox.com/asset/?id=13013097088"
 
--- // Click function
-textButton.MouseButton1Up:Connect(function()
-	isActive = not isActive
+roundy_2.CornerRadius = UDim.new(0, 45)
+roundy_2.Name = "roundy"
+roundy_2.Parent = dropdownButton
 
-	if isActive then
-		tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Thickness = 5}):Play()
-		textButton.Text = "Room Color: Gray"
-		for _, part in pairs(workspace:GetDescendants()) do
-			if part:IsA("BasePart") and part.Name == "Part" then
-				tweenService:Create(part, TweenInfo.new(.6, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = newColor}):Play()
+settingButton.Name = "settingButton"
+settingButton.Parent = main
+settingButton.BackgroundTransparency = 1.000
+settingButton.Position = UDim2.new(0.756000042, 0, 0.171428576, 0)
+settingButton.Size = UDim2.new(0, 45, 0, 45)
+settingButton.Visible = false
+settingButton.Image = "http://www.roblox.com/asset/?id=13013098942"
+settingButton.ImageTransparency = 1.000
+
+roundy_3.CornerRadius = UDim.new(0, 45)
+roundy_3.Name = "roundy"
+roundy_3.Parent = settingButton
+
+colorButton.Name = "colorButton"
+colorButton.Parent = main
+colorButton.BackgroundTransparency = 1.000
+colorButton.Position = UDim2.new(0.0600000024, 0, 0.171428576, 0)
+colorButton.Size = UDim2.new(0, 45, 0, 45)
+colorButton.Visible = false
+colorButton.Image = "http://www.roblox.com/asset/?id=13013098198"
+colorButton.ImageTransparency = 1.000
+
+roundy_4.CornerRadius = UDim.new(0, 45)
+roundy_4.Name = "roundy"
+roundy_4.Parent = colorButton
+
+credits.Name = "credits"
+credits.Parent = main
+credits.AnchorPoint = Vector2.new(0.5, 0.5)
+credits.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+credits.BackgroundTransparency = 1.000
+credits.BorderColor3 = Color3.fromRGB(27, 42, 53)
+credits.BorderSizePixel = 0
+credits.Position = UDim2.new(0.499833971, 0, 1.7222445, 0)
+credits.Size = UDim2.new(0, 450, 0, 70)
+credits.Visible = false
+
+roundy_5.CornerRadius = UDim.new(0, 45)
+roundy_5.Name = "roundy"
+roundy_5.Parent = credits
+
+doNotSteal.Name = "doNotSteal"
+doNotSteal.Parent = credits
+doNotSteal.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+doNotSteal.BackgroundTransparency = 1.000
+doNotSteal.BorderSizePixel = 0
+doNotSteal.Position = UDim2.new(0.110434234, 0, 0.142857149, 0)
+doNotSteal.Size = UDim2.new(0, 350, 0, 50)
+doNotSteal.Font = Enum.Font.Gotham
+doNotSteal.Text = "Made with <b>love</b> by <b>NFMS</b>"
+doNotSteal.TextColor3 = Color3.fromRGB(255, 255, 255)
+doNotSteal.TextSize = 25.000
+doNotSteal.TextTransparency = 1.000
+doNotSteal.TextWrapped = true
+doNotSteal.TextScaled = true
+doNotSteal.RichText = true
+
+notice.Name = "notice"
+notice.Parent = credits
+notice.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+notice.BackgroundTransparency = 1.000
+notice.BorderSizePixel = 0
+notice.Position = UDim2.new(0.0837675631, 0, 0.535164833, 0)
+notice.Size = UDim2.new(0, 375, 0, 50)
+notice.Font = Enum.Font.Gotham
+notice.Text = "Select a UI element to begin"
+notice.TextColor3 = Color3.fromRGB(255, 255, 255)
+notice.TextSize = 25.000
+notice.TextTransparency = 1.000
+notice.TextWrapped = true
+notice.TextScaled = true
+notice.RichText = true
+
+mainSettings.Name = "mainSettings"
+mainSettings.Parent = main
+mainSettings.AnchorPoint = Vector2.new(0.5, 0.5)
+mainSettings.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+mainSettings.BackgroundTransparency = 1.000
+mainSettings.BorderColor3 = Color3.fromRGB(27, 42, 53)
+mainSettings.BorderSizePixel = 0
+mainSettings.Position = UDim2.new(2.16495991, 0, 5.30939722, 0)
+mainSettings.Size = UDim2.new(0, 215, 0, 400)
+mainSettings.Visible = false
+
+roundy_6.CornerRadius = UDim.new(0, 20)
+roundy_6.Name = "roundy"
+roundy_6.Parent = mainSettings
+
+title.Name = "title"
+title.Parent = mainSettings
+title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1.000
+title.BorderSizePixel = 0
+title.Position = UDim2.new(0.170899287, 0, 0.0378571302, 0)
+title.Size = UDim2.new(0, 140, 0, 30)
+title.Font = Enum.Font.GothamBold
+title.Text = "Settings"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextSize = 25.000
+title.TextTransparency = 1.000
+title.TextWrapped = true
+
+value.Name = "value"
+value.Parent = mainSettings
+value.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+value.BackgroundTransparency = 1.000
+value.Position = UDim2.new(0.0790697634, 0, 0.277500004, 0)
+value.Size = UDim2.new(0, 180, 0, 45)
+value.Font = Enum.Font.GothamBold
+value.PlaceholderColor3 = Color3.fromRGB(108, 108, 108)
+value.PlaceholderText = "number"
+value.Text = ""
+value.TextColor3 = Color3.fromRGB(255, 255, 255)
+value.TextSize = 25.000
+value.TextTransparency = 1.000
+
+roundy_7.CornerRadius = UDim.new(0, 12)
+roundy_7.Name = "roundy"
+roundy_7.Parent = value
+
+smoothness.Name = "smoothness"
+smoothness.Parent = mainSettings
+smoothness.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+smoothness.BackgroundTransparency = 1.000
+smoothness.BorderSizePixel = 0
+smoothness.Position = UDim2.new(0.0777112693, 0, 0.150618196, 0)
+smoothness.Size = UDim2.new(0, 180, 0, 45)
+smoothness.ZIndex = 2
+smoothness.Font = Enum.Font.GothamMedium
+smoothness.Text = "Smoothness"
+smoothness.TextColor3 = Color3.fromRGB(135, 135, 135)
+smoothness.TextSize = 25.000
+smoothness.TextTransparency = 1.000
+smoothness.TextWrapped = true
+
+roundy_8.CornerRadius = UDim.new(0, 12)
+roundy_8.Name = "roundy"
+roundy_8.Parent = smoothness
+
+colors.Name = "colors"
+colors.Parent = main
+colors.AnchorPoint = Vector2.new(0.5, 0.5)
+colors.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+colors.BackgroundTransparency = 1.000
+colors.BorderColor3 = Color3.fromRGB(27, 42, 53)
+colors.BorderSizePixel = 0
+colors.ClipsDescendants = true
+colors.Position = UDim2.new(-1.19218314, 0, 5.32368279, 0)
+colors.Size = UDim2.new(0, 215, 0, 400)
+colors.Visible = false
+
+roundy_9.CornerRadius = UDim.new(0, 20)
+roundy_9.Name = "roundy"
+roundy_9.Parent = colors
+
+title_2.Name = "title"
+title_2.Parent = colors
+title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+title_2.BackgroundTransparency = 1.000
+title_2.BorderSizePixel = 0
+title_2.Position = UDim2.new(0.170899287, 0, 0.0378571302, 0)
+title_2.Size = UDim2.new(0, 140, 0, 30)
+title_2.Font = Enum.Font.GothamBold
+title_2.Text = "Colors"
+title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+title_2.TextSize = 25.000
+title_2.TextTransparency = 1.000
+title_2.TextWrapped = true
+
+content.Name = "content"
+content.Parent = colors
+content.Active = true
+content.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+content.BackgroundTransparency = 1.000
+content.BorderSizePixel = 0
+content.Position = UDim2.new(0, 0, 0.150000006, 0)
+content.Size = UDim2.new(0, 215, 0, 340)
+content.CanvasPosition = Vector2.new(0, 172)
+content.CanvasSize = UDim2.new(0, 0, 1.27999997, 0)
+content.ScrollBarThickness = 0
+
+color.Name = "color"
+color.Parent = content
+color.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+color.BackgroundTransparency = 1.000
+color.BorderSizePixel = 0
+color.Position = UDim2.new(0.0777112693, 0, 0.0156181902, 0)
+color.Size = UDim2.new(0, 180, 0, 45)
+color.ZIndex = 2
+color.Font = Enum.Font.GothamMedium
+color.Text = "Default White"
+color.TextColor3 = Color3.fromRGB(0, 0, 0)
+color.TextSize = 25.000
+color.TextTransparency = 1.000
+color.TextWrapped = true
+
+roundy_10.CornerRadius = UDim.new(0, 12)
+roundy_10.Name = "roundy"
+roundy_10.Parent = color
+
+adjust.Name = "adjust"
+adjust.Parent = content
+adjust.HorizontalAlignment = Enum.HorizontalAlignment.Center
+adjust.SortOrder = Enum.SortOrder.LayoutOrder
+adjust.CellSize = UDim2.new(0, 180, 0, 45)
+
+color_2.Name = "color"
+color_2.Parent = content
+color_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+color_2.BackgroundTransparency = 1.000
+color_2.BorderSizePixel = 0
+color_2.Position = UDim2.new(0.0777112693, 0, 0.0156181902, 0)
+color_2.Size = UDim2.new(0, 180, 0, 45)
+color_2.ZIndex = 2
+color_2.Font = Enum.Font.GothamMedium
+color_2.Text = "Jet Black"
+color_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_2.TextSize = 25.000
+color_2.TextTransparency = 1.000
+color_2.TextWrapped = true
+
+roundy_11.CornerRadius = UDim.new(0, 12)
+roundy_11.Name = "roundy"
+roundy_11.Parent = color_2
+
+color_3.Name = "color"
+color_3.Parent = content
+color_3.BackgroundColor3 = Color3.fromRGB(90, 35, 35)
+color_3.BackgroundTransparency = 1.000
+color_3.BorderSizePixel = 0
+color_3.Position = UDim2.new(0.0777112693, 0, 0.0156181902, 0)
+color_3.Size = UDim2.new(0, 180, 0, 45)
+color_3.ZIndex = 2
+color_3.Font = Enum.Font.GothamMedium
+color_3.Text = "Royal Red"
+color_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_3.TextSize = 25.000
+color_3.TextTransparency = 1.000
+color_3.TextWrapped = true
+
+roundy_12.CornerRadius = UDim.new(0, 12)
+roundy_12.Name = "roundy"
+roundy_12.Parent = color_3
+
+color_4.Name = "color"
+color_4.Parent = content
+color_4.BackgroundColor3 = Color3.fromRGB(90, 90, 20)
+color_4.BackgroundTransparency = 1.000
+color_4.BorderSizePixel = 0
+color_4.Position = UDim2.new(0.0777112693, 0, 0.0156181902, 0)
+color_4.Size = UDim2.new(0, 180, 0, 45)
+color_4.ZIndex = 2
+color_4.Font = Enum.Font.GothamMedium
+color_4.Text = "Olive Green"
+color_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_4.TextSize = 25.000
+color_4.TextTransparency = 1.000
+color_4.TextWrapped = true
+
+roundy_13.CornerRadius = UDim.new(0, 12)
+roundy_13.Name = "roundy"
+roundy_13.Parent = color_4
+
+color_5.Name = "color"
+color_5.Parent = content
+color_5.BackgroundColor3 = Color3.fromRGB(0, 40, 55)
+color_5.BackgroundTransparency = 1.000
+color_5.BorderSizePixel = 0
+color_5.Position = UDim2.new(0.0777112693, 0, 0.0156181902, 0)
+color_5.Size = UDim2.new(0, 180, 0, 45)
+color_5.ZIndex = 2
+color_5.Font = Enum.Font.GothamMedium
+color_5.Text = "Navy Blue"
+color_5.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_5.TextSize = 25.000
+color_5.TextTransparency = 1.000
+color_5.TextWrapped = true
+
+roundy_14.CornerRadius = UDim.new(0, 12)
+roundy_14.Name = "roundy"
+roundy_14.Parent = color_5
+
+color_6.Name = "color"
+color_6.Parent = content
+color_6.BackgroundColor3 = Color3.fromRGB(30, 5, 50)
+color_6.BackgroundTransparency = 1.000
+color_6.BorderSizePixel = 0
+color_6.Position = UDim2.new(0.0730601102, 0, 0.0206181891, 0)
+color_6.Size = UDim2.new(0, 180, 0, 45)
+color_6.ZIndex = 2
+color_6.Font = Enum.Font.GothamMedium
+color_6.Text = "Blacklight"
+color_6.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_6.TextSize = 25.000
+color_6.TextTransparency = 1.000
+color_6.TextWrapped = true
+
+roundy_15.CornerRadius = UDim.new(0, 12)
+roundy_15.Name = "roundy"
+roundy_15.Parent = color_6
+
+color_7.Name = "color"
+color_7.Parent = content
+color_7.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+color_7.BackgroundTransparency = 1.000
+color_7.BorderSizePixel = 0
+color_7.Position = UDim2.new(0.0730601102, 0, -0.212897435, 0)
+color_7.Size = UDim2.new(0, 180, 0, 45)
+color_7.ZIndex = 2
+color_7.Font = Enum.Font.GothamMedium
+color_7.Text = "Charcoal Gray"
+color_7.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_7.TextSize = 25.000
+color_7.TextTransparency = 1.000
+color_7.TextWrapped = true
+
+roundy_16.CornerRadius = UDim.new(0, 12)
+roundy_16.Name = "roundy"
+roundy_16.Parent = color_7
+
+color_8.Name = "color"
+color_8.Parent = content
+color_8.BackgroundColor3 = Color3.fromRGB(239, 184, 56)
+color_8.BackgroundTransparency = 1.000
+color_8.BorderSizePixel = 0
+color_8.Position = UDim2.new(0.0730601102, 0, -0.212897435, 0)
+color_8.Size = UDim2.new(0, 180, 0, 45)
+color_8.ZIndex = 2
+color_8.Font = Enum.Font.GothamMedium
+color_8.Text = "Racing Yellow"
+color_8.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_8.TextSize = 25.000
+color_8.TextTransparency = 1.000
+color_8.TextWrapped = true
+
+roundy_17.CornerRadius = UDim.new(0, 12)
+roundy_17.Name = "roundy"
+roundy_17.Parent = color_8
+
+color_9.Name = "color"
+color_9.Parent = content
+color_9.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
+color_9.BackgroundTransparency = 1.000
+color_9.BorderSizePixel = 0
+color_9.Position = UDim2.new(0.0730601102, 0, -0.212897435, 0)
+color_9.Size = UDim2.new(0, 180, 0, 45)
+color_9.ZIndex = 2
+color_9.Font = Enum.Font.GothamMedium
+color_9.Text = "Sunset Orange"
+color_9.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_9.TextSize = 25.000
+color_9.TextTransparency = 1.000
+color_9.TextWrapped = true
+
+roundy_18.CornerRadius = UDim.new(0, 12)
+roundy_18.Name = "roundy"
+roundy_18.Parent = color_9
+
+color_10.Name = "color"
+color_10.Parent = content
+color_10.BackgroundColor3 = Color3.fromRGB(255, 0, 191)
+color_10.BackgroundTransparency = 1.000
+color_10.BorderSizePixel = 0
+color_10.Position = UDim2.new(0.0730601102, 0, -0.212897435, 0)
+color_10.Size = UDim2.new(0, 180, 0, 45)
+color_10.ZIndex = 2
+color_10.Font = Enum.Font.GothamMedium
+color_10.Text = "Hot Pink"
+color_10.TextColor3 = Color3.fromRGB(255, 255, 255)
+color_10.TextSize = 25.000
+color_10.TextTransparency = 1.000
+color_10.TextWrapped = true
+
+roundy_19.CornerRadius = UDim.new(0, 12)
+roundy_19.Name = "roundy"
+roundy_19.Parent = color_10
+
+dropdownButton.MouseButton1Click:Connect(function()
+	if debounce == false then debounce = true
+		isEnabled1 = not isEnabled1
+		if isEnabled1 then
+			tweenService:Create(dropdownButton, TweenInfo.new(.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {ImageTransparency = 1}):Play()
+			tweenService:Create(main, predefinedInfo, {Size = UDim2.new(0, 250, 0, 70)}):Play()
+			task.wait(.5)
+			dropdownButton.Image = "rbxassetid://13013096229"
+			colorButton.Visible = true
+			settingButton.Visible = true
+			dropdownButton.Position = UDim2.new(0.36, 0, 0, 0)
+			colors.Position = UDim2.new(0.024, 0, 5.324, 0)
+			mainSettings.Position = UDim2.new(0.965, 0, 5.309, 0)
+			tweenService:Create(dropdownButton, predefinedInfo, {ImageTransparency = 0}):Play()
+			tweenService:Create(colorButton, predefinedInfo, {ImageTransparency = 0}):Play()
+			tweenService:Create(settingButton, predefinedInfo, {ImageTransparency = 0}):Play()
+			task.wait(.35)
+			credits.Visible =  true
+			tweenService:Create(credits, predefinedInfo, {BackgroundTransparency = 0.5}):Play()
+			tweenService:Create(doNotSteal, predefinedInfo, {TextTransparency = 0}):Play()
+			task.wait(1)
+			tweenService:Create(credits, predefinedInfo, {Size = UDim2.new(0, 450, 0, 130)}):Play()
+			tweenService:Create(credits, predefinedInfo, {Position = UDim2.new(0.5, 0, 2.154, 0)}):Play()
+			tweenService:Create(roundy_5, predefinedInfo, {CornerRadius = UDim.new(0, 25)}):Play()
+			task.wait(.25)
+			tweenService:Create(notice, predefinedInfo, {TextTransparency = 0}):Play()
+		else
+			tweenService:Create(credits, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(doNotSteal, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(notice, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(main, predefinedInfo, {Size = UDim2.new(0, 70, 0, 70)}):Play()
+			tweenService:Create(credits, predefinedInfo, {Size = UDim2.new(0, 450, 0, 70)}):Play()
+			tweenService:Create(credits, predefinedInfo, {Position = UDim2.new(0.5, 0, 1.722, 0)}):Play()
+			tweenService:Create(roundy_5, predefinedInfo, {CornerRadius = UDim.new(0, 45)}):Play()
+			tweenService:Create(colors, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(title_2, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(mainSettings, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(title, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(smoothness, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(smoothness, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(value, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(value, predefinedInfo, {TextTransparency = 1}):Play()
+			for _, button in pairs(content:GetChildren()) do
+				if button:IsA("TextButton") then
+					tweenService:Create(button, predefinedInfo, {BackgroundTransparency = 1}):Play()
+					tweenService:Create(button, predefinedInfo, {TextTransparency = 1}):Play()
+				end
 			end
-		end
-	else
-		tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Thickness = 5}):Play()
-		textButton.Text = "Room Color: White"
-		for _, part in pairs(workspace:GetDescendants()) do
-			if part:IsA("BasePart") and part.Name == "Part" then
-				tweenService:Create(part, TweenInfo.new(.6, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = previousColor}):Play()
-			end
-		end
+			tweenService:Create(dropdownButton, TweenInfo.new(.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {ImageTransparency = 1}):Play()
+			tweenService:Create(colorButton, TweenInfo.new(.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {ImageTransparency = 1}):Play()
+			tweenService:Create(settingButton, TweenInfo.new(.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {ImageTransparency = 1}):Play()
+			task.wait(.35)
+			dropdownButton.Image = "rbxassetid://13013097088"
+			colorButton.Visible = false
+			settingButton.Visible = false
+			credits.Visible = false
+			mainSettings.Visible = false
+			colors.Visible = false
+			dropdownButton.Position = UDim2.new(0, 0, 0, 0)
+			tweenService:Create(dropdownButton, predefinedInfo, {ImageTransparency = 0}):Play()
+		end	
+		task.wait(timeout) debounce = false
 	end
 end)
 
-textButton.MouseButton1Down:Connect(function()
-	tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0, Thickness = 10}):Play()
+colorButton.MouseButton1Click:Connect(function()
+	if debounce2 == false then debounce2 = true
+		isEnabled2 = not isEnabled2
+		if isEnabled2 then
+			tweenService:Create(notice, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(credits, predefinedInfo, {Size = UDim2.new(0, 450, 0, 70)}):Play()
+			tweenService:Create(credits, predefinedInfo, {Position = UDim2.new(0.5, 0, 1.722, 0)}):Play()
+			tweenService:Create(roundy_5, predefinedInfo, {CornerRadius = UDim.new(0, 45)}):Play()
+			colors.Visible = true
+			tweenService:Create(colors, predefinedInfo, {BackgroundTransparency = 0.5}):Play()
+			tweenService:Create(title_2, predefinedInfo, {TextTransparency = 0}):Play()
+			for _, button in pairs(content:GetChildren()) do
+				if button:IsA("TextButton") then
+					tweenService:Create(button, predefinedInfo, {BackgroundTransparency = 0}):Play()
+					tweenService:Create(button, predefinedInfo, {TextTransparency = 0}):Play()
+				end
+			end
+		else
+			tweenService:Create(colors, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(title_2, predefinedInfo, {TextTransparency = 1}):Play()
+			for _, button in pairs(content:GetChildren()) do
+				if button:IsA("TextButton") then
+					tweenService:Create(button, predefinedInfo, {BackgroundTransparency = 1}):Play()
+					tweenService:Create(button, predefinedInfo, {TextTransparency = 1}):Play()
+				end
+			end
+			task.wait(.5)
+			colors.Visible = false
+		end
+		task.wait(timeout2) debounce2 = false
+	end
 end)
 
-textButton.MouseEnter:Connect(function()
-	tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0, Color = Color3.fromRGB(255, 255, 255)}):Play()
+settingButton.MouseButton1Click:Connect(function()
+	if debounce3 == false then debounce3 = true
+		isEnabled3 = not isEnabled3
+		if isEnabled3 then
+			tweenService:Create(notice, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(credits, predefinedInfo, {Size = UDim2.new(0, 450, 0, 70)}):Play()
+			tweenService:Create(credits, predefinedInfo, {Position = UDim2.new(0.5, 0, 1.722, 0)}):Play()
+			tweenService:Create(roundy_5, predefinedInfo, {CornerRadius = UDim.new(0, 45)}):Play()
+			mainSettings.Visible = true
+			tweenService:Create(mainSettings, predefinedInfo, {BackgroundTransparency = 0.5}):Play()
+			tweenService:Create(title, predefinedInfo, {TextTransparency = 0}):Play()
+			tweenService:Create(smoothness, predefinedInfo, {BackgroundTransparency = 0}):Play()
+			tweenService:Create(smoothness, predefinedInfo, {TextTransparency = 0}):Play()
+			tweenService:Create(value, predefinedInfo, {BackgroundTransparency = 0}):Play()
+			tweenService:Create(value, predefinedInfo, {TextTransparency = 0}):Play()
+		else
+			tweenService:Create(mainSettings, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(title, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(smoothness, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(smoothness, predefinedInfo, {TextTransparency = 1}):Play()
+			tweenService:Create(value, predefinedInfo, {BackgroundTransparency = 1}):Play()
+			tweenService:Create(value, predefinedInfo, {TextTransparency = 1}):Play()
+			task.wait(.5)
+			mainSettings.Visible = false
+		end
+		task.wait(timeout2) debounce3 = false
+	end
 end)
-textButton.MouseLeave:Connect(function()
-	tweenService:Create(uiStroke, TweenInfo.new(.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Transparency = 0.7, Color = Color3.fromRGB(70, 70, 70)}):Play()
+
+smoothness.MouseButton1Click:Connect(function()
+	isEnabled4 = not isEnabled4
+	if isEnabled4 then
+		isSmoothEnabled = true
+		tweenService:Create(smoothness, predefinedInfo, {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+	else
+		isSmoothEnabled = false
+		tweenService:Create(smoothness, predefinedInfo, {TextColor3 = Color3.fromRGB(135, 135, 135)}):Play()
+	end
 end)
+
+value.FocusLost:Connect(function()
+	smoothTime = tonumber(value.Text)
+end)
+
+for _, button in pairs(content:GetChildren()) do
+	if button:IsA("TextButton") then
+		button.MouseButton1Click:Connect(function()
+			if isSmoothEnabled then
+				for _, part in pairs(workspace:GetDescendants()) do
+					if part:IsA("BasePart") and part.Name == "Part" then
+						tweenService:Create(part, TweenInfo.new(smoothTime, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = button.BackgroundColor3}):Play()
+					end
+				end
+			else
+				for _, part in pairs(workspace:GetDescendants()) do
+					if part:IsA("BasePart") and part.Name == "Part" then
+						tweenService:Create(part, TweenInfo.new(0, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, 0, false, 0), {Color = button.BackgroundColor3}):Play()
+					end
+				end
+			end
+		end)
+	end
+end
