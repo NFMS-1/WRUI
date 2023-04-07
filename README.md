@@ -15,4 +15,4 @@ Script Owner : https://www.roblox.com/users/46067630/profile
 Assistance : Anonymous
 
 
-Current version: 1.1
+Current version: 2.0
