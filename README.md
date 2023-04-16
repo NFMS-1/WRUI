@@ -7,6 +7,7 @@ ________________________________________________________________________________
 [Recommended] To use loadstring so the source code can be updated at anytime without having you to change it manually. 
 
 Loadstring: loadstring(game:HttpGet("https://raw.githubusercontent.com/NFMS-1/WRUI/main/1", true))()
+
 Discord: https://discord.gg/W6CSaWrQZJ
 
 _______________________________________________________________________________________________________________________________
