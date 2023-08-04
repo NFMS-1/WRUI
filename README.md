@@ -5,7 +5,7 @@ ________________________________________________________________________________
 
 Loadstring: loadstring(game:HttpGet("https://raw.githubusercontent.com/NFMS-1/WRUI/main/1", true))()
 
-Discord Support & Updates: https://discord.gg/W6CSaWrQZJ
+Discord Support & Updates: [https://discord.gg/W6CSaWrQZJ](https://discord.gg/7usCKM9nfr)
 
 _______________________________________________________________________________________________________________________________
 
